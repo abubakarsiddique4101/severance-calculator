@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculate your severance pay — The Government of Barbados</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@govtech-bb/styles@1.0.0-alpha.16/dist/styles.css"
+    />
+    <style>
+      .form-page {
+        padding-block: var(--spacing-l);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xm);
+
+        @media (width >= 1024px) {
+          gap: var(--spacing-m);
+        }
+      }
+      .form-page__service-title {
+        display: inline-flex;
+        align-items: center;
+        padding: var(--spacing-xs) var(--spacing-s);
+        border-left: var(--spacing-xxs) solid var(--color-blue-40);
+        color: var(--color-mid-grey-00);
+      }
+      .form-page__heading {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-s);
+      }
+      .form-page__groups {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-m);
+      }
+
+      .panel {
+        display: none;
+      }
+      .panel[data-active="true"] {
+        display: block;
+      }
+
+      .summary-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid var(--color-grey-00);
+      }
+      .summary-list__row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: var(--spacing-m);
+        padding: var(--spacing-s) 0;
+        border-bottom: 1px solid var(--color-grey-00);
+        align-items: baseline;
+      }
+      .summary-list__key {
+        color: var(--color-text-muted);
+      }
+      .summary-list__value {
+        font-weight: var(--font-weight-bold);
+      }
+
+      .estimate-card {
+        border: 1px solid var(--color-grey-00);
+        border-radius: var(--radius-sm);
+        padding: var(--spacing-m);
+        background: var(--color-background);
+      }
+      .estimate-card__amount {
+        margin: 0;
+      }
+      .estimate-card__meta {
+        margin-top: var(--spacing-xs);
+        color: var(--color-text-muted);
+      }
+
+      .breakdown {
+        margin-top: var(--spacing-m);
+        border: 1px solid var(--color-grey-00);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+      .breakdown__head,
+      .breakdown__row {
+        display: grid;
+        grid-template-columns: 70px 1fr 110px;
+        gap: var(--spacing-s);
+        padding: var(--spacing-s) var(--spacing-m);
+        align-items: center;
+      }
+      .breakdown__head {
+        background: var(--color-blue-100);
+        color: var(--color-white-00);
+        font-size: var(--font-size-caption);
+      }
+      .breakdown__row {
+        background: var(--color-background);
+        border-top: 1px solid var(--color-grey-00);
+      }
+      .breakdown__row:nth-child(even) {
+        background: var(--color-blue-10);
+      }
+      .breakdown__amt {
+        text-align: right;
+        font-weight: var(--font-weight-bold);
+      }
+
+      .small {
+        color: var(--color-text-muted);
+      }
+
+      .confirmation {
+        background: var(--color-green-00);
+        color: var(--color-white-00);
+        padding: var(--spacing-m);
+        border-radius: var(--radius-sm);
+      }
+      .confirmation h2,
+      .confirmation p {
+        color: var(--color-white-00);
+      }
+      .confirmation p {
+        margin-top: var(--spacing-xs);
+      }
+    </style>
+  </head>
+  <body class="govbb-page">
+    <div>
+      <div class="govbb-official-banner">
+        <div class="govbb-container govbb-official-banner__inner">
+          <div class="govbb-official-banner__crest">
+            <img
+              class="govbb-official-banner__icon"
+              src="https://unpkg.com/@govtech-bb/styles@1.0.0-alpha.16/dist/assets/images/govbb-creast.svg"
+              alt=""
+            />
+          </div>
+          <div class="govbb-official-banner__text">
+            <span>Official government website</span>
+          </div>
+        </div>
+      </div>
+
+      <header class="govbb-header">
+        <div class="govbb-container govbb-header__inner">
+          <a
+            href="#guide"
+            aria-label="Go to the alpha.gov.bb homepage"
+            onclick="
+              go('guide');
+              return false;
+            "
+          >
+            <img
+              class="govbb-header__logo"
+              src="https://unpkg.com/@govtech-bb/styles@1.0.0-alpha.16/dist/assets/images/govbb-logo.svg"
+              alt="GOVBB"
+            />
+          </a>
+        </div>
+      </header>
+    </div>
+
+    <main class="govbb-page__main">
+      <div
+        class="govbb-status-banner govbb-status-banner--alpha"
+        role="status"
+        aria-label="alpha status banner"
+        aria-live="polite"
+      >
+        <div class="govbb-container">
+          <p>
+            This page is in
+            <a
+              class="govbb-link govbb-link--secondary"
+              href="/what-we-mean-by-alpha"
+              >Alpha</a
+            >.
+          </p>
+        </div>
+      </div>
+
+      <!-- ───────────────── SERVICE GUIDE ───────────────── -->
+      <section class="panel" id="panel-guide" data-active="true">
+        <div class="govbb-container">
+          <div class="form-page">
+            <!-- <nav aria-label="Breadcrumb">
+              <a class="govbb-link govbb-link--secondary" href="#">Home</a>
+              <span aria-hidden="true"> › </span>
+              <a class="govbb-link govbb-link--secondary" href="#">Money and financial support</a>
+            </nav> -->
+
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Money and financial support</span
+              >
+              <h1 class="govbb-text-h1">Calculate your severance pay</h1>
+              <p class="govbb-text-body">
+                If you lost your job, your employer may have to pay you money.
+                This tool gives you an estimate.
+              </p>
+            </div>
+
+            <h2 class="govbb-text-h2">Who this is for</h2>
+            <p class="govbb-text-body">
+              This tool can help if all of these are true:
+            </p>
+            <ol class="govbb-list govbb-list--number">
+              <li>
+                You worked for the same employer for at least 2 years (104
+                weeks).
+              </li>
+              <li>You were aged 16 to 64 on your last day at work.</li>
+              <li>
+                You lost your job because of redundancy, a natural disaster, or
+                being kept on lay-off or short-time.
+              </li>
+            </ol>
+            <p class="govbb-text-body">
+              It may not help if:
+            </p>
+            <ol class="govbb-list govbb-list--number">
+              <li>You were dismissed because of your conduct.</li>
+              <li>
+                You turned down a similar job from the same employer.
+              </li>
+              <li>
+                Your job type is excluded.
+              </li>
+            </ol>
+
+            <h2 class="govbb-text-h2">When to use this tool</h2>
+            <p class="govbb-text-body">
+              You can use it any time.
+              If you want to claim, do it within 12 months of your last day at work.
+            </p>
+
+            <h2 class="govbb-text-h2">How to get an estimate</h2>
+            <p class="govbb-text-body">
+              It takes about 3 minutes. We will ask you:
+            </p>
+            <ol class="govbb-list govbb-list--number">
+              <li>Why you lost your job</li>
+              <li>How many complete years you worked there</li>
+              <li>How much you are paid</li>
+            </ol>
+            <p>
+              <a
+              class="govbb-btn"
+              href="#start"
+              onclick="
+                go('start');
+                return false;
+              "
+              data-start-link
+              >Start now</a
+            >
+
+            </p>
+
+            <h2 class="govbb-text-h2">After you get your estimate</h2>
+            <p class="govbb-text-body">
+              This is an estimate of the minimum amount.
+              Your contract may give you more.
+              Your employer should pay within 2 months.
+            </p>
+            <p class="govbb-text-body">
+              If they do not pay, contact the Ministry of Labour.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────── START PAGE ───────────────── -->
+      <section class="panel" id="panel-start" data-active="false">
+        <div class="govbb-container">
+          <div class="form-page">
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Calculate your severance pay</span
+              >
+              <h1 class="govbb-text-h1">Before you start</h1>
+              <p class="govbb-text-body">
+                Answer all 3 questions in one go.
+                You cannot save your answers and come back later.
+              </p>
+            </div>
+
+            <h2 class="govbb-text-h2">How long does it take?</h2>
+            <p class="govbb-text-body">It takes about 3 minutes.</p>
+
+            <h2 class="govbb-text-h2">What you will need</h2>
+            <p class="govbb-text-body">Before you start, make sure you know:</p>
+            <ol class="govbb-list govbb-list--number">
+              <li>Why you lost your job.</li>
+              <li>How many complete years you worked for your employer.</li>
+              <li>Your usual pay each week, or each month.</li>
+            </ol>
+
+            <p>
+              <a
+              class="govbb-btn"
+              href="#q-reason"
+              onclick="
+                go('q-reason');
+                return false;
+              "
+              data-start-link
+              >Start</a
+            >
+            </p>
+            
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────── Q1: REASON ───────────────── -->
+      <section class="panel" id="panel-q-reason" data-active="false">
+        <div class="govbb-container">
+          <form
+            class="form-page"
+            novalidate
+            onsubmit="return submitReason(event);"
+          >
+            <div
+              class="govbb-error-summary"
+              id="error-summary-reason"
+              role="alert"
+              aria-labelledby="error-summary-reason-title"
+              tabindex="-1"
+              hidden
+            >
+              <h2
+                id="error-summary-reason-title"
+                class="govbb-error-summary__title"
+              >
+                There is a problem
+              </h2>
+              <ul
+                class="govbb-error-summary__list"
+                id="error-summary-reason-list"
+              ></ul>
+            </div>
+
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Calculate your severance pay</span
+              >
+              <h1 class="govbb-text-h1">Why did you lose your job?</h1>
+              <p class="govbb-text-body">Choose one option.</p>
+            </div>
+
+            <div class="govbb-form-group" id="fg-reason">
+              <fieldset class="govbb-fieldset govbb-form-group" aria-describedby="reason-hint">
+                <legend class="govbb-fieldset__legend govbb-visually-hidden">
+                  Reason
+                </legend>
+                <p class="govbb-hint" id="reason-hint">Select one option.</p>
+                <p
+                  class="govbb-error-message"
+                  id="reason-error"
+                  role="alert"
+                  hidden
+                ></p>
+                <div class="govbb-form-group">
+                <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="reason-redundancy"
+                      type="radio"
+                      name="reason"
+                      value="redundancy"
+                      aria-describedby="reason-hint"
+                    />
+                    <label
+                      class="govbb-radio-item__label"
+                      for="reason-redundancy"
+                    >
+                      My job was cut (redundancy)
+                    </label>
+                  </div>
+
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="reason-disaster"
+                      type="radio"
+                      name="reason"
+                      value="disaster"
+                      aria-describedby="reason-hint"
+                    />
+                    <label
+                      class="govbb-radio-item__label"
+                      for="reason-disaster"
+                    >
+                      A natural disaster damaged the workplace
+                    </label>
+                  </div>
+
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="reason-layoff"
+                      type="radio"
+                      name="reason"
+                      value="layoff"
+                      aria-describedby="reason-hint"
+                    />
+                    <label class="govbb-radio-item__label" for="reason-layoff">
+                      No work or big cut in hours for many weeks
+                    </label>
+                  </div>
+
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="reason-misconduct"
+                      type="radio"
+                      name="reason"
+                      value="misconduct"
+                      aria-describedby="reason-hint"
+                    />
+                    <label
+                      class="govbb-radio-item__label"
+                      for="reason-misconduct"
+                    >
+                      I was dismissed because of my conduct
+                    </label>
+                  </div>
+
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="reason-refused"
+                      type="radio"
+                      name="reason"
+                      value="refused"
+                      aria-describedby="reason-hint"
+                    />
+                    <label class="govbb-radio-item__label" for="reason-refused">
+                      I turned down a similar job from the same employer
+                    </label>
+                  </div>
+
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="reason-other"
+                      type="radio"
+                      name="reason"
+                      value="other"
+                      aria-describedby="reason-hint"
+                    />
+                    <label class="govbb-radio-item__label" for="reason-other">
+                      None of these
+                    </label>
+                  </div>
+                  </div>
+                </div>
+              </fieldset>
+
+            <div class="govbb-btn-group">
+              <button
+                class="govbb-btn--secondary"
+                type="button"
+                onclick="go('start')"
+              >
+                Previous
+              </button>
+              <button class="govbb-btn" type="submit">Continue</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ───────────────── Q2: YEARS ───────────────── -->
+      <section class="panel" id="panel-q-years" data-active="false">
+        <div class="govbb-container">
+          <form
+            class="form-page"
+            novalidate
+            onsubmit="return submitYears(event);"
+          >
+            <div
+              class="govbb-error-summary"
+              id="error-summary-years"
+              role="alert"
+              aria-labelledby="error-summary-years-title"
+              tabindex="-1"
+              hidden
+            >
+              <h2
+                id="error-summary-years-title"
+                class="govbb-error-summary__title"
+              >
+                There is a problem
+              </h2>
+              <ul
+                class="govbb-error-summary__list"
+                id="error-summary-years-list"
+              ></ul>
+            </div>
+
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Calculate your severance pay</span
+              >
+              <h1 class="govbb-text-h1">
+                How many complete years did you work there?
+              </h1>
+              <p class="govbb-text-body">
+                Count only complete years. A complete year means 52 weeks that
+                count towards your employment. Months on top of your last full
+                year do not count.
+              </p>
+            </div>
+
+            <div class="govbb-form-group" id="fg-years">
+              <label class="govbb-label" for="years">Complete years</label>
+              <p class="govbb-hint" id="years-hint">For example, 7</p>
+              <p
+                class="govbb-error-message"
+                id="years-error"
+                role="alert"
+                hidden
+              ></p>
+              <div class="govbb-input-wrapper" style="max-width: 14rem">
+                <input
+                  class="govbb-input"
+                  id="years"
+                  name="years"
+                  type="number"
+                  inputmode="numeric"
+                  min="0"
+                  max="60"
+                  step="1"
+                  aria-describedby="years-hint"
+                />
+              </div>
+            </div>
+
+            <div class="govbb-btn-group">
+              <button
+                class="govbb-btn--secondary"
+                type="button"
+                onclick="go('q-reason')"
+              >
+                Previous
+              </button>
+              <button class="govbb-btn" type="submit">Continue</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ───────────────── Q3: PAY ───────────────── -->
+      <section class="panel" id="panel-q-pay" data-active="false">
+        <div class="govbb-container">
+          <form
+            class="form-page"
+            novalidate
+            onsubmit="return submitPay(event);"
+          >
+            <div
+              class="govbb-error-summary"
+              id="error-summary-pay"
+              role="alert"
+              aria-labelledby="error-summary-pay-title"
+              tabindex="-1"
+              hidden
+            >
+              <h2
+                id="error-summary-pay-title"
+                class="govbb-error-summary__title"
+              >
+                There is a problem
+              </h2>
+              <ul
+                class="govbb-error-summary__list"
+                id="error-summary-pay-list"
+              ></ul>
+            </div>
+
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Calculate your severance pay</span
+              >
+              <h1 class="govbb-text-h1">What is your usual pay?</h1>
+              <p class="govbb-text-body">
+                Tell us how much you usually earn before tax.
+              </p>
+            </div>
+
+            <div class="form-page__groups">
+              <div class="govbb-form-group" id="fg-pay">
+                <label class="govbb-label" for="pay">Amount in BDS$</label>
+                <p class="govbb-hint" id="pay-hint">For example, 1200.00</p>
+                <p
+                  class="govbb-error-message"
+                  id="pay-error"
+                  role="alert"
+                  hidden
+                ></p>
+                <div class="govbb-input-wrapper" style="max-width: 14rem">
+                  <input
+                    class="govbb-input"
+                    id="pay"
+                    name="pay"
+                    type="number"
+                    inputmode="decimal"
+                    min="0"
+                    step="0.01"
+                    aria-describedby="pay-hint"
+                  />
+                </div>
+              </div>
+
+              <div class="govbb-form-group" id="fg-period">
+                <fieldset class="govbb-fieldset govbb-form-group" aria-describedby="period-hint">
+                  <legend class="govbb-fieldset__legend">
+                    How often are you paid?
+                  </legend>
+                  <p class="govbb-hint" id="period-hint">Select one option.</p>
+                  <div class="govbb-form-group">
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="period-weekly"
+                      type="radio"
+                      name="period"
+                      value="weekly"
+                      checked
+                      aria-describedby="period-hint"
+                    />
+                    <label class="govbb-radio-item__label" for="period-weekly"
+                      >Each week</label
+                    >
+                  </div>
+
+                  <div class="govbb-radio-item">
+                    <input
+                      class="govbb-radio"
+                      id="period-monthly"
+                      type="radio"
+                      name="period"
+                      value="monthly"
+                      aria-describedby="period-hint"
+                    />
+                    <label class="govbb-radio-item__label" for="period-monthly"
+                      >Each month</label
+                    >
+                  </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <div class="govbb-btn-group">
+              <button
+                class="govbb-btn--secondary"
+                type="button"
+                onclick="go('q-years')"
+              >
+                Previous
+              </button>
+              <button class="govbb-btn" type="submit">Continue</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ───────────────── CHECK YOUR ANSWERS ───────────────── -->
+      <section class="panel" id="panel-check" data-active="false">
+        <div class="govbb-container">
+          <div class="form-page">
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Calculate your severance pay</span
+              >
+              <h1 class="govbb-text-h1">Check your answers</h1>
+              <p class="govbb-text-body">
+                Make sure your answers are correct before you see the estimate.
+              </p>
+            </div>
+
+            <ul
+              class="summary-list"
+              id="summary-list"
+              aria-label="Your answers"
+            ></ul>
+
+            <div class="govbb-btn-group">
+              <button
+                class="govbb-btn--secondary"
+                type="button"
+                onclick="go('q-pay')"
+              >
+                Previous
+              </button>
+              <button class="govbb-btn" type="button" onclick="finish()">
+                Show my estimate
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────── ESTIMATE / CONFIRMATION ───────────────── -->
+      <section class="panel" id="panel-result" data-active="false">
+        <div class="govbb-container">
+          <div class="form-page">
+            <div class="form-page__heading">
+              <span class="form-page__service-title govbb-text-body"
+                >Calculate your severance pay</span
+              >
+            </div>
+
+            <div id="result-wrap"></div>
+            <div id="next-steps"></div>
+
+            <h2 class="govbb-text-h2">If you need help</h2>
+            <p class="govbb-text-body">
+              You can contact the Ministry of Labour &amp; Social Partnership
+              Relations. They can advise you and help if your employer does not
+              pay.
+            </p>
+
+            <div class="govbb-btn-group">
+              <button
+                class="govbb-btn--secondary"
+                type="button"
+                onclick="restart()"
+              >
+                Start again
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="govbb-footer">
+      <div class="govbb-container govbb-footer__inner">
+        <nav class="govbb-footer__nav" aria-label="Footer">
+          <a class="govbb-footer__link" href="/">Home</a>
+          <a class="govbb-footer__link" href="/cookie-policy">Cookie Policy</a>
+          <a class="govbb-footer__link" href="/terms-conditions"
+            >Terms &amp; Conditions</a
+          >
+          <a class="govbb-footer__link" href="/sitemap">Sitemap</a>
+        </nav>
+        <hr class="govbb-footer__divider" aria-hidden="true" />
+        <div class="govbb-footer__end">
+          <img
+            class="govbb-footer__coat"
+            src="https://unpkg.com/@govtech-bb/styles@1.0.0-alpha.16/dist/assets/images/govbb-creast.svg"
+            alt="Government of Barbados Coat of Arms"
+          />
+          <p class="govbb-footer__copy">© 2026 Government of Barbados</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      var state = { reason: "", years: null, pay: null, period: "weekly" };
+
+      var titles = {
+        guide: "Calculate your severance pay — The Government of Barbados",
+        start: "Before you start — The Government of Barbados",
+        "q-reason": "Why did you lose your job? — The Government of Barbados",
+        "q-years":
+          "How many complete years did you work there? — The Government of Barbados",
+        "q-pay": "What is your usual pay? — The Government of Barbados",
+        check: "Check your answers — The Government of Barbados",
+        result: "Your estimate — The Government of Barbados",
+      };
+
+      function go(step) {
+        document.querySelectorAll(".panel").forEach(function (p) {
+          p.dataset.active = p.id === "panel-" + step ? "true" : "false";
+        });
+        document.title = titles[step] || titles.guide;
+        window.scrollTo({ top: 0, behavior: "auto" });
+        if (step === "check") renderSummary();
+      }
+
+      function describedBy(input, errorId, isError) {
+        if (!input) return;
+        var current = (input.getAttribute("aria-describedby") || "")
+          .split(/\s+/)
+          .filter(function (id) {
+            return id && id !== errorId;
+          });
+        if (isError) current.push(errorId);
+        input.setAttribute("aria-describedby", current.join(" ").trim());
+      }
+
+      function showInlineError(errorId, inputId, message) {
+        var err = document.getElementById(errorId);
+        var input = inputId ? document.getElementById(inputId) : null;
+        if (err) {
+          err.textContent = message;
+          err.hidden = false;
+        }
+        if (input) {
+          input.setAttribute("aria-invalid", "true");
+          describedBy(input, errorId, true);
+        }
+      }
+
+      function clearInlineError(errorId, inputId) {
+        var err = document.getElementById(errorId);
+        var input = inputId ? document.getElementById(inputId) : null;
+        if (err) err.hidden = true;
+        if (input) {
+          input.removeAttribute("aria-invalid");
+          describedBy(input, errorId, false);
+        }
+      }
+
+      function showSummary(summaryId, errors) {
+        var summary = document.getElementById(summaryId);
+        var list = document.getElementById(summaryId + "-list");
+        if (!summary || !list) return;
+        list.innerHTML = errors
+          .map(function (e) {
+            return (
+              '<li><a class="govbb-error-summary__link" href="#' +
+              e.target +
+              '" onclick="document.getElementById(\'' +
+              e.target +
+              "').focus(); return false;\">" +
+              e.message +
+              "</a></li>"
+            );
+          })
+          .join("");
+        summary.hidden = false;
+        summary.focus();
+        if (!document.title.startsWith("Error: ")) {
+          document.title = "Error: " + document.title;
+        }
+      }
+
+      function clearSummary(summaryId, originalTitle) {
+        var summary = document.getElementById(summaryId);
+        if (summary) summary.hidden = true;
+        if (originalTitle) document.title = originalTitle;
+      }
+
+      function submitReason(e) {
+        e.preventDefault();
+        clearInlineError("reason-error");
+        clearSummary("error-summary-reason", titles["q-reason"]);
+        var checked = document.querySelector('input[name="reason"]:checked');
+        if (!checked) {
+          var msg = "Choose the reason you lost your job";
+          showInlineError("reason-error", null, msg);
+          showSummary("error-summary-reason", [
+            { target: "reason-redundancy", message: msg },
+          ]);
+          return false;
+        }
+        state.reason = checked.value;
+        go("q-years");
+        return false;
+      }
+
+      function submitYears(e) {
+        e.preventDefault();
+        clearInlineError("years-error", "years");
+        clearSummary("error-summary-years", titles["q-years"]);
+        var raw = document.getElementById("years").value;
+        var n = parseInt(raw, 10);
+        var msg = null;
+        if (raw === "" || !Number.isFinite(n)) {
+          msg = "Enter the number of complete years";
+        } else if (n < 0 || n > 60) {
+          msg = "Enter a number between 0 and 60";
+        }
+        if (msg) {
+          showInlineError("years-error", "years", msg);
+          showSummary("error-summary-years", [
+            { target: "years", message: msg },
+          ]);
+          return false;
+        }
+        state.years = n;
+        go("q-pay");
+        return false;
+      }
+
+      function submitPay(e) {
+        e.preventDefault();
+        clearInlineError("pay-error", "pay");
+        clearSummary("error-summary-pay", titles["q-pay"]);
+        var raw = document.getElementById("pay").value;
+        var amount = parseFloat(raw);
+        var period =
+          (document.querySelector('input[name="period"]:checked') || {})
+            .value || "weekly";
+        if (!Number.isFinite(amount) || amount <= 0) {
+          var msg = "Enter how much you are paid";
+          showInlineError("pay-error", "pay", msg);
+          showSummary("error-summary-pay", [{ target: "pay", message: msg }]);
+          return false;
+        }
+        state.pay = amount;
+        state.period = period;
+        go("check");
+        return false;
+      }
+
+      function reasonLabel(v) {
+        return (
+          {
+            redundancy: "My job was made redundant",
+            disaster: "A natural disaster damaged the workplace",
+            layoff: "There was no work or my hours were cut for many weeks",
+            misconduct: "I was dismissed because of my conduct",
+            refused: "I turned down a similar job from the same employer",
+            other: "None of the above",
+          }[v] || "—"
+        );
+      }
+
+      function money(n) {
+        return (
+          "BDS$" +
+          n.toLocaleString("en-BB", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
+      }
+
+      function weeklyPay() {
+        if (!state.pay) return 0;
+        if (state.period === "monthly") return state.pay * (12 / 52);
+        return state.pay;
+      }
+
+      function renderSummary() {
+        var rows = [
+          {
+            key: "Reason for losing your job",
+            value: reasonLabel(state.reason),
+            change: "q-reason",
+          },
+          {
+            key: "Complete years worked",
+            value:
+              state.years === null
+                ? "—"
+                : state.years + (state.years === 1 ? " year" : " years"),
+            change: "q-years",
+          },
+          {
+            key: "Usual pay",
+            value:
+              state.pay === null
+                ? "—"
+                : money(state.pay) +
+                  " " +
+                  (state.period === "monthly" ? "each month" : "each week"),
+            change: "q-pay",
+          },
+        ];
+        var html = rows
+          .map(function (r) {
+            return (
+              '<li class="summary-list__row">' +
+              '<span class="summary-list__key">' +
+              r.key +
+              "</span>" +
+              '<span class="summary-list__value">' +
+              r.value +
+              "</span>" +
+              '<a class="govbb-link" href="#' +
+              r.change +
+              '" onclick="go(\'' +
+              r.change +
+              '\'); return false;">Change<span class="govbb-visually-hidden"> ' +
+              r.key.toLowerCase() +
+              "</span></a>" +
+              "</li>"
+            );
+          })
+          .join("");
+        document.getElementById("summary-list").innerHTML = html;
+      }
+
+      function finish() {
+        var wrap = document.getElementById("result-wrap");
+        var next = document.getElementById("next-steps");
+        if (!wrap) return;
+        if (next) next.innerHTML = "";
+
+        if (state.reason === "misconduct") {
+          wrap.innerHTML =
+            '<div class="estimate-card">' +
+            '<p class="govbb-text-h2 estimate-card__amount">You may not be owed severance pay</p>' +
+            '<p class="estimate-card__meta">Based on what you told us</p>' +
+            '<p class="govbb-text-body" style="margin-top: var(--spacing-m)">If you were dismissed because of your conduct, you may not be owed severance pay. If you are not sure, contact the Ministry of Labour.</p>' +
+            "</div>";
+          go("result");
+          return;
+        }
+
+        if (state.reason === "refused") {
+          wrap.innerHTML =
+            '<div class="estimate-card">' +
+            '<p class="govbb-text-h2 estimate-card__amount">You may not be owed severance pay</p>' +
+            '<p class="estimate-card__meta">Based on what you told us</p>' +
+            '<p class="govbb-text-body" style="margin-top: var(--spacing-m)">If you turned down a similar job from the same employer, you may not be owed severance pay. If you are not sure, contact the Ministry of Labour.</p>' +
+            "</div>";
+          go("result");
+          return;
+        }
+
+        if (state.reason === "other") {
+          wrap.innerHTML =
+            '<div class="estimate-card">' +
+            '<p class="govbb-text-h2 estimate-card__amount">We cannot give you an estimate</p>' +
+            '<p class="estimate-card__meta">Based on what you told us</p>' +
+            '<p class="govbb-text-body" style="margin-top: var(--spacing-m)">This tool only covers redundancy, natural disaster, and lay-off or short-time. Contact the Ministry of Labour to check your case.</p>' +
+            "</div>";
+          go("result");
+          return;
+        }
+
+        if (state.years === null || state.years < 2) {
+          wrap.innerHTML =
+            '<div class="estimate-card">' +
+            '<p class="govbb-text-h2 estimate-card__amount">You may not qualify yet</p>' +
+            '<p class="estimate-card__meta">Based on what you told us</p>' +
+            '<p class="govbb-text-body" style="margin-top: var(--spacing-m)">You usually need at least 2 years (104 weeks) with the same employer. If you are close to 2 years, contact the Ministry of Labour to check.</p>' +
+            "</div>";
+          go("result");
+          return;
+        }
+
+        var w = weeklyPay();
+        var counted = Math.min(state.years, 33);
+        var rows = [];
+        var total = 0;
+        var multSum = 0;
+
+        for (var i = 1; i <= counted; i++) {
+          var rate = i <= 10 ? 2.5 : i <= 20 ? 3.0 : 3.5;
+          var amt = rate * w;
+          total += amt;
+          multSum += rate;
+          rows.push({ year: i, rate: rate, amt: amt });
+        }
+
+        var capNote =
+          state.years > 33
+            ? '<p class="govbb-text-body small">Only the most recent 33 years are counted under the law.</p>'
+            : "";
+
+        var breakdownHtml =
+          '<div class="breakdown" role="region" aria-label="How your estimate is worked out">' +
+          '<div class="breakdown__head"><div>Year</div><div>Rate</div><div style="text-align:right">Amount</div></div>' +
+          rows
+            .map(function (r) {
+              return (
+                '<div class="breakdown__row">' +
+                "<div>" +
+                r.year +
+                "</div>" +
+                "<div>" +
+                r.rate.toFixed(1) +
+                " × your weekly pay</div>" +
+                '<div class="breakdown__amt">' +
+                money(r.amt) +
+                "</div>" +
+                "</div>"
+              );
+            })
+            .join("") +
+          "</div>";
+
+        var nextSteps = document.getElementById("next-steps");
+        var nextStepsHtml =
+          '<h2 class="govbb-text-h2">What to do next</h2>' +
+          '<ol class="govbb-list govbb-list--number">' +
+          '<li>Write to your employer and ask them to pay you. Keep a copy of your letter or email.</li>' +
+          '<li>If they do not pay, contact the Ministry of Labour for help.</li>' +
+          '<li>Make a written claim within 12 months of your last day. After that, you lose the right to claim.</li>' +
+          '</ol>';
+        nextSteps.innerHTML = nextStepsHtml;
+        var reasonText = reasonLabel(state.reason);
+
+        wrap.innerHTML =
+          '<div class="confirmation" role="status">' +
+          '<h2 class="govbb-text-h2">Estimated severance pay</h2>' +
+          '<p style="font-size:var(--font-size-display); font-weight:700; margin-top: var(--spacing-xs)">' +
+          money(total) +
+          "</p>" +
+          "<p>Based on " +
+          counted +
+          " complete year" +
+          (counted === 1 ? "" : "s") +
+          " of work and " +
+          money(w) +
+          " each week.</p>" +
+          "</div>" +
+          '<h2 class="govbb-text-h2" style="margin-top: var(--spacing-l)">How we worked this out</h2>' +
+          '<ul class="summary-list" aria-label="Inputs used">' +
+          '<li class="summary-list__row"><span class="summary-list__key">Reason</span><span class="summary-list__value">' +
+          reasonText +
+          "</span><span></span></li>" +
+          '<li class="summary-list__row"><span class="summary-list__key">Years counted</span><span class="summary-list__value">' +
+          counted +
+          "</span><span></span></li>" +
+          '<li class="summary-list__row"><span class="summary-list__key">Weekly pay used</span><span class="summary-list__value">' +
+          money(w) +
+          "</span><span></span></li>" +
+          '<li class="summary-list__row"><span class="summary-list__key">Total weeks of pay</span><span class="summary-list__value">' +
+          multSum.toFixed(1) +
+          " weeks</span><span></span></li>" +
+          "</ul>" +
+          capNote +
+          breakdownHtml +
+          '<p class="govbb-text-body small" style="margin-top: var(--spacing-m)">' +
+          "This is an estimate of the minimum amount. Your contract may give you more." +
+          "</p>" +
+          '<p class="govbb-text-body small">' +
+          "Your employer should pay within 2 months. If they do not pay, contact the Ministry of Labour." +
+          "</p>";
+
+        if (next) {
+          next.innerHTML =
+            '<h2 class="govbb-text-h2">What to do next</h2>' +
+            '<ol class="govbb-list govbb-list--number">' +
+            "<li>Write to your employer and ask them to pay you. Keep a copy.</li>" +
+            "<li>If they do not pay, contact the Ministry of Labour.</li>" +
+            "<li>If you want to claim, do it within 12 months of your last day at work.</li>" +
+            "</ol>";
+        }
+
+        go("result");
+      }
+
+      function restart() {
+        state = { reason: "", years: null, pay: null, period: "weekly" };
+        document.querySelectorAll('input[name="reason"]').forEach(function (i) {
+          i.checked = false;
+        });
+        document.getElementById("years").value = "";
+        document.getElementById("pay").value = "";
+        document.getElementById("period-weekly").checked = true;
+        clearInlineError("reason-error");
+        clearInlineError("years-error", "years");
+        clearInlineError("pay-error", "pay");
+        clearSummary("error-summary-reason", titles["q-reason"]);
+        clearSummary("error-summary-years", titles["q-years"]);
+        clearSummary("error-summary-pay", titles["q-pay"]);
+        go("guide");
+      }
+    </script>
+  </body>
+</html>
