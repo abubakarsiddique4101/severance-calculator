@@ -30,11 +30,6 @@ Open the HTML file in a browser:
 
 - `gov-tech/severance_calculator.html`
 
-## Files
-
-- `gov-tech/severance_calculator.html` — the prototype
-- `gov-tech/severance-sections.pdf` — source sections used to confirm rules
-
 ## Design system
 
 - CSS is loaded from UNPKG:
